@@ -1,0 +1,75 @@
+{
+  "variables": {
+    "version": "0.1.0",
+    "cm": "chef",
+    "cm_version": "latest",
+    "iso_url": "iso/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
+    "iso_checksum": "beed231a34e90e1dd9a04b3afabec31d62ce3889"
+  },
+  "builders": [
+    {
+      "vm_name": "win2008r2",
+      "type": "parallels-iso",
+      "parallels_tools_flavor": "win",
+      "guest_os_type": "win-2008",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "parallels_tools_mode": "upload",
+      "parallels_tools_guest_path": "prl-tools-win.iso",  
+      "floppy_files": [
+        "floppy/win2008r2/Autounattend.xml",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/install-winrm.cmd",
+        "floppy/powerconfig.bat",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/openssh.bat",
+        "floppy/zz-start-sshd.cmd"
+      ],
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+      "disk_size": 40960,
+      "prlctl": [
+                ["set", "{{.Name}}", "--efi-boot", "off"],
+                ["set", "{{.Name}}", "--memsize", "1024"],
+                ["set", "{{.Name}}", "--cpus", "1"]
+              ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "remote_path": "/tmp/script.bat",
+      "environment_vars": [
+        "CM={{user `cm`}}",
+        "CM_VERSION={{user `cm_version`}}"
+      ],
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "scripts": [
+        "scripts/windows/vagrant.bat",
+        "scripts/windows/cmtool.bat",
+        "scripts/windows/vmtool.bat",
+        "scripts/windows/clean.bat",
+        "scripts/windows/ultradefrag.bat",
+        "scripts/windows/uninstall-7zip.bat",
+        "scripts/windows/sdelete.bat"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": ["rm -f /tmp/script.bat"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "keep_input_artifact": false,
+    "compression_level": 1,
+    "vagrantfile_template": "tpl/vagrantfile-win2008r2.tpl",
+    "output": "builds/{{.Provider}}/win2008r2-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
+  }]
+}
