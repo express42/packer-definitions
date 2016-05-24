@@ -2,8 +2,8 @@
   "variables": {
     "chef_version": "latest",
     "mirror": "http://releases.ubuntu.com",
-    "path": "/14.04/ubuntu-14.04.4-server-amd64.iso",
-    "checksum": "3ffb7a3690ce9a07ac4a4d1b829f990681f7e47d",
+    "path": "/16.04/ubuntu-16.04-server-amd64.iso",
+    "checksum": "70db69379816b91eb01559212ae474a36ecec9ef",
     "memory": "384",
     "cpus": "1"
   },
@@ -11,9 +11,11 @@
     {
       "name":"virtualbox",
       "boot_command": [
-        "<esc><wait>",
-        "<esc><wait>",
-        "<enter><wait>",
+        "<enter><wait><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "/install/vmlinuz<wait>",
         " auto<wait>",
         " console-setup/ask_detect=false<wait>",
@@ -30,7 +32,7 @@
         " netcfg/get_domain=vm<wait>",
         " netcfg/get_hostname=vagrant<wait>",
         " noapic<wait>",
-        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-14.04/preseed.cfg<wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-16.04/preseed.cfg<wait>",
         " -- <wait>",
         "<enter><wait>"
       ],
@@ -42,7 +44,7 @@
       "iso_checksum": "{{ user `checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{user `mirror`}}{{ user `path` }}",
-      "output_directory": "packer-ubuntu-14.04-amd64-virtualbox",
+      "output_directory": "packer-ubuntu-16.06-amd64-virtualbox",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -64,14 +66,16 @@
         ]
       ],
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "packer-ubuntu-14.04-amd64"
+      "vm_name": "packer-ubuntu-16.04-amd64"
     },
     {
       "name":"vmware",
       "boot_command": [
-        "<esc><wait>",
-        "<esc><wait>",
-        "<enter><wait>",
+        "<enter><wait><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "/install/vmlinuz<wait>",
         " auto<wait>",
         " console-setup/ask_detect=false<wait>",
@@ -88,7 +92,7 @@
         " netcfg/get_domain=vm<wait>",
         " netcfg/get_hostname=vagrant<wait>",
         " noapic<wait>",
-        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-14.04/preseed.cfg<wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-16.04/preseed.cfg<wait>",
         " -- <wait>",
         "<enter><wait>"
       ],
@@ -107,7 +111,7 @@
       "ssh_wait_timeout": "10000s",
       "tools_upload_flavor": "linux",
       "type": "vmware-iso",
-      "vm_name": "packer-ubuntu-14.04-amd64",
+      "vm_name": "packer-ubuntu-16.04-amd64",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "{{ user `memory` }}",
@@ -117,9 +121,11 @@
     {
       "name":"parallels",
       "boot_command": [
-        "<esc><wait>",
-        "<esc><wait>",
-        "<enter><wait>",
+        "<enter><wait><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "/install/vmlinuz<wait>",
         " auto<wait>",
         " console-setup/ask_detect=false<wait>",
@@ -136,7 +142,7 @@
         " netcfg/get_domain=vm<wait>",
         " netcfg/get_hostname=vagrant<wait>",
         " noapic<wait>",
-        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-14.04/preseed.cfg<wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-16.04/preseed.cfg<wait>",
         " -- <wait>",
         "<enter><wait>"
       ],
@@ -148,7 +154,7 @@
       "iso_checksum": "{{ user `checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{user `mirror`}}{{ user `path` }}",
-      "output_directory": "packer-ubuntu-14.04-amd64-parallels",
+      "output_directory": "packer-ubuntu-16.04-amd64-parallels",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -170,13 +176,13 @@
         ]
       ],
       "prlctl_version_file": ".prlctl_version",
-      "vm_name": "packer-ubuntu-14.04-amd64"
+      "vm_name": "packer-ubuntu-16.04-amd64"
     }
 
   ],
   "post-processors": [
     {
-      "output": "../builds/{{.Provider}}/express42-ubuntu-14.04_chef-{{user `chef_version`}}.box",
+      "output": "../builds/{{.Provider}}/express42-ubuntu-16.04_chef-{{user `chef_version`}}.box",
       "type": "vagrant"
     }
   ],
