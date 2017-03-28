@@ -2,8 +2,8 @@
   "variables": {
     "chef_version": "latest",
     "mirror": "http://releases.ubuntu.com",
-    "path": "/14.04/ubuntu-14.04.4-server-amd64.iso",
-    "checksum": "3ffb7a3690ce9a07ac4a4d1b829f990681f7e47d",
+    "path": "/14.04/ubuntu-14.04.5-server-amd64.iso",
+    "checksum": "5e567024c385cc8f90c83d6763c6e4f1cd5deb6f",
     "memory": "384",
     "cpus": "1"
   },
