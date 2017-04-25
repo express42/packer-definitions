@@ -6,8 +6,8 @@
       "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c"
     },
   "builders": [
-  
       {
+        "name":"parallels",
         "vm_name": "win2012r2",
         "type": "parallels-iso",
         "parallels_tools_flavor": "win",
@@ -39,6 +39,48 @@
                 ["set", "{{.Name}}", "--memsize", "1024"],
                 ["set", "{{.Name}}", "--cpus", "1"]
               ]
+      },
+      {
+        "name":"virtualbox",
+        "vm_name": "win2012r2",
+        "type": "virtualbox-iso",
+        "guest_os_type": "Windows2012_64",
+        "iso_url": "{{ user `iso_url` }}",
+        "iso_checksum": "{{ user `iso_checksum` }}",
+        "iso_checksum_type": "sha1",
+        "boot_wait": "2m",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "10000s",
+        "floppy_files": [
+                "floppy/win2012r2/Autounattend.xml",
+                "floppy/00-run-all-scripts.cmd",
+                "floppy/install-winrm.cmd",
+                "floppy/powerconfig.bat",
+                "floppy/01-install-wget.cmd",
+                "floppy/_download.cmd",
+                "floppy/_packer_config.cmd",
+                "floppy/passwordchange.bat",
+                "floppy/openssh.bat",
+                "floppy/zz-start-sshd.cmd",
+                "floppy/oracle-cert.cer"
+              ],
+        "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+        "disk_size": 40960,
+        "vboxmanage": [
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--memory",
+            "2048"
+          ],
+          [
+            "modifyvm",
+            "{{.Name}}",
+            "--cpus",
+            "2"
+          ]
+	]
       }
     ],
   "provisioners": [
